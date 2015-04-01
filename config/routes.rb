@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   root to: 'home#index'
   devise_for :trainers
   resources :trainers
-  resources :pokemon, as: :capture, path: "pokemon/capture"
+  resources :pokemon
+  patch 'capture', to: 'pokemon', as: :capture
 end
