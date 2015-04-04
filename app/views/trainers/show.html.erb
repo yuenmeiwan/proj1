@@ -4,14 +4,16 @@
 <p><%= @trainer.name if @trainer.name %> owns: </p>
 <% for pokemon in Pokemon.all %>
   <% if pokemon.trainer_id == @trainer.id %>
-    <% if pokemon.health > 0 %>
+    <% if pokemon.health > 0 && @trainer.id != current_trainer.id %>
 	  <%= pokemon.name + ", level: " + pokemon.level.to_s + ", health: " + pokemon.health.to_s%>
 	  <%= button_to "Damage!", damage_path(id: pokemon), :class => "button medium", :method => :patch %>
+	  <% end %>
+	  <% if @trainer.id == current_trainer.id %>
+	  <%= pokemon.name + ", level: " + pokemon.level.to_s + ", health: " + pokemon.health.to_s%>
+	  <%= button_to "Damage!", damage_path(id: pokemon), :class => "button medium", :method => :patch %>
+	  <%= button_to "Heal", heal_path(id: pokemon), :class => "button medium", :method => :patch %>
+	  <% end %>
 	  <br>
-	<% end %>
-	<% if pokemon.health <= 0 %>
-		<% pokemon.destroy %>
-	<% end %>
   <% end %>
 <% end %>
 
